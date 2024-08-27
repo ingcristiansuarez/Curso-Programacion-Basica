@@ -8,6 +8,12 @@ function main() {
     let buttonPet = document.getElementById("btn-pet");
     buttonPet.addEventListener('click', selectPetPlayer);
 
+    let sectionSelectReboot = document.getElementById("section-reboot");
+    sectionSelectReboot.style.display = 'none';
+
+    let sectionSelectAttack = document.getElementById("select-attack");
+    sectionSelectAttack.style.display = 'none';
+
     let buttonWater = document.getElementById("btn-water");
     buttonWater.addEventListener('click', attackTypeWater);
 
@@ -17,11 +23,17 @@ function main() {
     let buttonPlant = document.getElementById("btn-plant");
     buttonPlant.addEventListener('click', attackTypePlant);
     
-    let buttonReboot = document.getElementById("reboot");
+    let buttonReboot = document.getElementById("btn-reboot");
     buttonReboot.addEventListener('click', rebootLocation);
 }
 
 function selectPetPlayer() {
+    let sectionSelectPet = document.getElementById("select-pet");
+    sectionSelectPet.style.display = 'none';
+
+    let sectionSelectAttack = document.getElementById("select-attack");
+    sectionSelectAttack.style.display = 'block';
+
     let inputHipodogue = document.getElementById('hipodogue');
     let inputCapipepo = document.getElementById('capipepo');
     let inputRatigueya = document.getElementById('ratigueya');    
@@ -147,6 +159,9 @@ function messageFinal(resultFinal) {
 
     let buttonPlant = document.getElementById("btn-plant");
     buttonPlant.disabled = true;
+
+    let sectionSelectReboot = document.getElementById("section-reboot");
+    sectionSelectReboot.style.display = 'block';
 }
 
 function aleatorio(min, max) {

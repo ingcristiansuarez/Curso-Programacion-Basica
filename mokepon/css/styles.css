@@ -1,0 +1,28 @@
+.our_title {
+    color: rosybrown;
+    background-color: teal;
+    width: 310px;
+    height: 45px;
+
+}
+
+#select-pet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mokepon_card {
+    width: 100px;
+    height: 100px;
+    background: aqua;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 10px;
+    border: 1px, solid, rebeccapurple;
+}
+
+input {
+    display: none;
+}

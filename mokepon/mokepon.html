@@ -3,26 +3,27 @@
         <meta charset="utf-8"/>
         <title>MOKEPON</title>
         <script src="./js/mokepon.js"></script>
+        <link rel="stylesheet" href="./css/styles.css">
     </head>
     <body>
-        <h1>MOKEPON 💧🔥🌱</h1>
-
-        <section id="seleccionar-mascota">
+        <section id="select-pet">
+            <h1 class="our_title">MOKEPON 💧🔥🌱</h1>
             <h2>Elige a tu mascota</h2>
 
-            <label for="hipodogue">hipodogue</label>
+            <label class="mokepon_card" for="hipodogue">hipodogue</label>
             <input type="radio" name="pet" id="hipodogue"/>
 
-            <label for="capipepo">capipepo</label>
+            <label class="mokepon_card" for="capipepo">capipepo</label>
             <input type="radio" name="pet" id="capipepo"/>
 
-            <label for="ratigueya">ratigueya</label>
+            <label class="mokepon_card" for="ratigueya">ratigueya</label>
             <input type="radio" name="pet" id="ratigueya"/>
 
             <button id="btn-pet">Seleccionar</button>
         </section>
 
-        <section id="seleccionar-ataque">
+        <section id="select-attack">
+            <h1 class="our_title">MOKEPON 💧🔥🌱</h1>
             <h2>Elige a tu ataque</h2>
             <p>Tu mascota <span id="player-pet"></span> tiene <span id="pet-lifes">3</span> vidas </p>
             <p>La mascota del enemigo <span id="enemy-pet"></span> tiene <span id="enemy-pet-lifes">3</span> vidas</p>
@@ -35,8 +36,8 @@
         <section id="messages">
             
         </section>
-        <section id="reboot">
-            <button>Reiniciar</button>
+        <section id="section-reboot">
+            <button id="btn-reboot">Reiniciar</button>
         </section>
     </body>
 </html>
