@@ -1,9 +1,9 @@
-.our_title {
-    color: rosybrown;
-    background-color: teal;
-    width: 310px;
-    height: 45px;
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&display=swap');
 
+body {
+    font-family: "Anybody", sans-serif;
+    background-color: #050C9C;
 }
 
 #select-pet {
@@ -13,16 +13,121 @@
     align-items: center;
 }
 
-.mokepon_card {
-    width: 100px;
+.our_title {
+    color: white;
+    font-size: 32px;
+    font-family: "Nova Mono", monospace;
+}
+
+.sub_title {
+    color: white;
+    font-size: 20px;
+}
+
+.mokepon_cards {
+    display: flex;
+    gap: 10px;
+}
+
+.mokepon_card {    
+    width: 180px;
     height: 100px;
-    background: aqua;
+    background: #3572EF;
     padding: 10px;
     box-sizing: border-box;
-    margin: 10px;
-    border: 1px, solid, rebeccapurple;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mokepon_card img {
+    width: 80px;
+}
+
+.btn_pet {
+    width: 100px;
+    height: 40px;    
+    background: transparent;
+    /* background-color: #3ABEF9;*/
+    color: white;
+    font-family: "Anybody", sans-serif;
+    border-radius: 20px;
+    border: 2px solid white;
+    margin-top: 30px;
 }
 
 input {
     display: none;
+}
+
+input:checked + label {
+    background-color: #3DC2EC;
+}
+
+.types_attacks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#select-attack {
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn_attack {
+    background: #3572EF;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    border-color: transparent;
+    width: 180px;
+    color: white;
+    font-family: "Anybody", sans-serif;
+}
+
+#messages {
+    width: 200px;
+    padding: 20px;
+    margin-top: 20px;
+    background: #3DC2EC;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#btn-reboot {
+    border: none;
+    background: #3572EF;
+    color: white;
+    border-radius: 20px;
+    font-family: "Anybody", sans-serif;
+
+}
+
+#battles {
+    display: grid;
+    grid-template-columns: 100px 100px;
+    color: white;
+}
+
+.pet_lifes, .enemy_pet_lifes {
+    font-size: 32px;
+    margin-bottom: 0;
+}
+
+.player-attack, .enemy-attack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media(max-width: 580px) {
+    .mokepon_cards, .types_attacks {
+        flex-direction: column;
+    }
 }

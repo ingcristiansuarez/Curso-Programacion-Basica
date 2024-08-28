@@ -32,7 +32,7 @@ function selectPetPlayer() {
     sectionSelectPet.style.display = 'none';
 
     let sectionSelectAttack = document.getElementById("select-attack");
-    sectionSelectAttack.style.display = 'block';
+    sectionSelectAttack.style.display = 'flex';
 
     let inputHipodogue = document.getElementById('hipodogue');
     let inputCapipepo = document.getElementById('capipepo');
@@ -134,22 +134,30 @@ function gameAnalysis() {
 }
 
 function messagesAttack(result) {
-    let sectionMessage = document.getElementById('messages');
+    let restulBattle = document.getElementById('result');
+    let playerAttackSelected = document.getElementById('player-attack');
+    let playerEnemySelected = document.getElementById('enemy-attack');
 
-    let descriptionAttack = document.createElement('p');
-    descriptionAttack.innerHTML = 'Tu mascota atacó con '+ playerAttack +', la mascota del enemigo atacó con '+ enemyAttack +' ---\n '+ result;
+    let selectedAttackPlayer = document.createElement('p');
+    let selectedEnemyPlayer = document.createElement('p');
 
-    sectionMessage.appendChild(descriptionAttack);
+    restulBattle.innerHTML = result;
+    selectedAttackPlayer.innerHTML = playerAttack;
+    selectedEnemyPlayer.innerHTML = enemyAttack;
+    
+    playerAttackSelected.appendChild(selectedAttackPlayer);
+    playerEnemySelected.appendChild(selectedEnemyPlayer);
+
+    // descriptionAttack.innerHTML = 'Tu mascota atacó con '+ playerAttack +', la mascota del enemigo atacó con '+ enemyAttack +' ---\n '+ result;
+
+    // sectionMessage.appendChild(descriptionAttack);
 
 }
 
 function messageFinal(resultFinal) {
-    let sectionMessage = document.getElementById('messages');
+    let sectionMessage = document.getElementById('result');
 
-    let descriptionAttack = document.createElement('p');
-    descriptionAttack.innerHTML = resultFinal;
-
-    sectionMessage.appendChild(descriptionAttack);
+    sectionMessage.innerHTML = resultFinal;    
 
     let buttonWater = document.getElementById("btn-water");
     buttonWater.disabled = true;
