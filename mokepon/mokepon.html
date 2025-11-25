@@ -3,6 +3,7 @@
     <meta charset="utf-8" />
     <title>MOKEPON</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
     <section id="select-pet">
@@ -16,8 +17,18 @@
     </section>
 
     <section id="view-map">
-      <h1 class="our_title">Recorre el mapa con tú mokepon 💧🔥🌱</h1>
+      <h2 class="sub_title">Recorre el mapa con tú mokepon 💧🔥🌱</h2>
       <canvas id="map"></canvas>
+      <button onmouseup="stopMove()" onmousedown="moveUp()">Arriba</button>
+      <div>
+        <button onmouseup="stopMove()" onmousedown="moveLeft()">
+          Izquierda
+        </button>
+        <button onmouseup="stopMove()" onmousedown="moveDown()">Abajo</button>
+        <button onmouseup="stopMove()" onmousedown="moveRight()">
+          Derecha
+        </button>
+      </div>
     </section>
 
     <section id="select-attack">

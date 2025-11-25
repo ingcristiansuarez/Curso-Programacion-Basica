@@ -26,6 +26,8 @@ const playerEnemySelected = document.getElementById('enemy-attack');
 const sectionMap = document.getElementById('view-map');
 const map = document.getElementById('map');
 
+const maximumMapwidth = 350;
+
 let mokepons = [];
 let buttonsAttacks = [];
 let playerAttack = [];
@@ -40,28 +42,74 @@ let inputHipodogue;
 let inputCapipepo;
 let inputRatigueya;
 let petPlayer;
+let myMokepon;
 let attacksMokepon;
 let buttonFire;
 let buttonPlant;
 let buttonWater;
 let indexPlayer;
 let indexEnemy;
+let canva = map.getContext("2d");
+let intervalMokepon;
+let backgroundMap = new Image();
+backgroundMap.src = './assets/mokemap.png';
+let heightMap;
+let widthMap = window.innerWidth - 20;
+
+if (widthMap > maximumMapwidth) {
+    widthMap = maximumMapwidth - 20;
+}
+
+heightMap = widthMap * 600 / 800;
+
+map.width = widthMap;
+map.height = heightMap;
 
 
 class Mokepon {
-    constructor(name, photo, life) {
+    constructor(name, photo, life, pictureMap) {
         this.name = name;
         this.photo = photo;
         this.life = life;
         this.attacks = [];
+        this.width = 40;
+        this.height = 40;
+        this.x = aleatorio(0, map.width - this.width);
+        this.y = aleatorio(0, map.height - this.height);
+        this.mapPhoto = new Image();
+        this.mapPhoto.src = pictureMap;
+        this.speedX = 0;
+        this.speedY = 0;
+    }
+
+    paintMokepon() {
+        canva.drawImage(
+            this.mapPhoto,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        )
     }
 }
 
-let hipodogue = new Mokepon('hipodogue', './assets/mokepons_mokepon_hipodoge_attack.png', 5);
-let capipepo = new Mokepon('capipepo', './assets/mokepons_mokepon_capipepo_attack.png', 5);
-let ratigueya = new Mokepon('ratigueya', './assets/mokepons_mokepon_ratigueya_attack.png', 5);
+let hipodogue = new Mokepon('hipodogue', './assets/mokepons_mokepon_hipodoge_attack.png', 5, './assets/hipodoge.png');
+let capipepo = new Mokepon('capipepo', './assets/mokepons_mokepon_capipepo_attack.png', 5, './assets/capipepo.png');
+let ratigueya = new Mokepon('ratigueya', './assets/mokepons_mokepon_ratigueya_attack.png', 5, './assets/ratigueya.png');
+
+let hipodogueEnemy = new Mokepon('hipodogue', './assets/mokepons_mokepon_hipodoge_attack.png', 5, './assets/hipodoge.png');
+let capipepoEnemy = new Mokepon('capipepo', './assets/mokepons_mokepon_capipepo_attack.png', 5, './assets/capipepo.png');
+let ratigueyaEnemy = new Mokepon('ratigueya', './assets/mokepons_mokepon_ratigueya_attack.png', 5, './assets/ratigueya.png');
 
 hipodogue.attacks.push(
+    { name: '💧', id: 'btn-water' },
+    { name: '💧', id: 'btn-water' },
+    { name: '💧', id: 'btn-water' },
+    { name: '🔥', id: 'btn-fire' },
+    { name: '🌿', id: 'btn-plant' },
+);
+
+hipodogueEnemy.attacks.push(
     { name: '💧', id: 'btn-water' },
     { name: '💧', id: 'btn-water' },
     { name: '💧', id: 'btn-water' },
@@ -77,7 +125,23 @@ capipepo.attacks.push(
     { name: '🔥', id: 'btn-fire' },
 );
 
+capipepoEnemy.attacks.push(
+    { name: '🌿', id: 'btn-plant' },
+    { name: '🌿', id: 'btn-plant' },
+    { name: '🌿', id: 'btn-plant' },
+    { name: '💧', id: 'btn-water' },
+    { name: '🔥', id: 'btn-fire' },
+);
+
 ratigueya.attacks.push(
+    { name: '🔥', id: 'btn-fire' },
+    { name: '🔥', id: 'btn-fire' },
+    { name: '🔥', id: 'btn-fire' },
+    { name: '💧', id: 'btn-water' },
+    { name: '🌿', id: 'btn-plant' },
+);
+
+ratigueyaEnemy.attacks.push(
     { name: '🔥', id: 'btn-fire' },
     { name: '🔥', id: 'btn-fire' },
     { name: '🔥', id: 'btn-fire' },
@@ -111,7 +175,8 @@ function main() {
 
 function selectPetPlayer() {
     sectionSelectPet.style.display = 'none';
-    sectionSelectAttack.style.display = 'flex';
+    //sectionSelectAttack.style.display = 'flex';
+    //canva.fillRect(5, 15, 20, 40);
     if (inputHipodogue.checked) {
         spanPetPlayer.innerHTML = inputHipodogue.id;
         petPlayer = inputHipodogue.id;
@@ -127,7 +192,8 @@ function selectPetPlayer() {
         location.reload();
     }
     extractAttacks(petPlayer);
-    selectPetEnemy();
+    sectionMap.style.display = 'flex';
+    startMap();
 }
 
 function extractAttacks(petPlayer) {
@@ -175,10 +241,10 @@ function attackSequence() {
     });
 }
 
-function selectPetEnemy() {
-    let enemyPet = aleatorio(0, mokepons.length - 1);
-    spanPetEnemy.innerHTML = mokepons[enemyPet].name;
-    enemyAttacks = mokepons[enemyPet].attacks;
+function selectPetEnemy(enemyPet) {
+    console.log("Mascota enemiga: " + enemyPet);
+    spanPetEnemy.innerHTML = enemyPet.name;
+    enemyAttacks = enemyPet.attacks;
     attackSequence();
 }
 
@@ -276,6 +342,114 @@ function aleatorio(min, max) {
 
 function rebootLocation() {
     location.reload();
+}
+
+function paintCanvas() {
+    myMokepon.x = myMokepon.x + myMokepon.speedX;
+    myMokepon.y = myMokepon.y + myMokepon.speedY;
+    canva.clearRect(0, 0, map.width, map.height);
+    canva.drawImage(
+        backgroundMap,
+        0,
+        0,
+        map.width,
+        map.height
+    );
+
+    myMokepon.paintMokepon();
+    hipodogueEnemy.paintMokepon();
+    capipepoEnemy.paintMokepon();
+    ratigueyaEnemy.paintMokepon();
+
+    if (myMokepon.speedX !== 0 || myMokepon.speedY !== 0) {
+        checkCollision(hipodogueEnemy);
+        checkCollision(capipepoEnemy);
+        checkCollision(ratigueyaEnemy);
+    }
+}
+
+function moveRight() {
+    myMokepon.speedX = 5;
+}
+
+function moveLeft() {
+    myMokepon.speedX = -5;
+}
+
+function moveUp() {
+    myMokepon = getMokepon();
+    myMokepon.speedY = -5;
+}
+
+function moveDown() {
+    myMokepon.speedY = 5;
+}
+
+function stopMove() {
+    myMokepon.speedX = 0;
+    myMokepon.speedY = 0;
+}
+
+function pressKey(event) {
+    switch (event.key) {
+        case 'ArrowUp':
+            moveUp();
+            break;
+        case 'ArrowDown':
+            moveDown();
+            break;
+        case 'ArrowLeft':
+            moveLeft();
+            break;
+        case 'ArrowRight':
+            moveRight();
+            break;
+        default:
+            break;
+    }
+}
+
+function startMap() {
+    myMokepon = getMokepon(petPlayer);
+    intervalMokepon = setInterval(paintCanvas, 50);
+
+    window.addEventListener('keydown', pressKey);
+    window.addEventListener('keyup', stopMove);
+}
+
+function getMokepon() {
+    for (let i = 0; i < mokepons.length; i++) {
+        if (petPlayer === mokepons[i].name) {
+            return mokepons[i];
+        }
+    }
+}
+
+function checkCollision(enemy) {
+    const enemyTop = enemy.y;
+    const enemyBottom = enemy.y + enemy.height;
+    const enemyLeft = enemy.x;
+    const enemyRight = enemy.x + enemy.width;
+
+    const myMokeponTop = myMokepon.y;
+    const myMokeponBottom = myMokepon.y + myMokepon.height;
+    const myMokeponLeft = myMokepon.x;
+    const myMokeponRight = myMokepon.x + myMokepon.width;
+
+    if (
+        myMokeponBottom < enemyTop ||
+        myMokeponTop > enemyBottom ||
+        myMokeponRight < enemyLeft ||
+        myMokeponLeft > enemyRight
+    ) {
+        return;
+    }
+    stopMove();
+    clearInterval(intervalMokepon);
+    console.log("Se detectó una colisión con " + enemy.name);
+    sectionMap.style.display = 'none';
+    sectionSelectAttack.style.display = 'flex';
+    selectPetEnemy(enemy);
 }
 
 window.addEventListener('load', main);
